@@ -1,0 +1,26 @@
+{
+    "macros": [ "MBED_ALL_STATS_ENABLED"],
+    "config": {
+        "wifi-shield": {
+            "help": "Options are internal, WIFI_ESP8266, WIFI_IDW0XX1",
+            "value": "WIFI_ISM43362"
+        },
+        "wifi-ssid": {
+            "help": "WiFi SSID",
+            "value": "\"CHANGE ME!\""
+        },
+        "wifi-password": {
+            "help": "WiFi Password",
+            "value": "\"CHANGE ME!\""
+        },
+        "api-key":{
+            "help":  "REST API Key for Treasure Data",
+            "value": "\"APIKEY GOES HERE\""
+        }
+    },
+    "target_overrides": {
+        "*": {
+            "platform.stdio-convert-newlines": true
+        }
+    }
+}
