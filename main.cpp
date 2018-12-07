@@ -72,7 +72,7 @@ int main(void){
             mbed_stats_cpu_get(  &cpuinfo);
 
             // Construct strings to send
-            x = sprintf(cpu_buff,"{\"uptime\":\"%d\",\"idle_time\":\"%d\",\"sleep_time\":\"%d\",\"deep_sleep_time\":\"%d\"}",
+            x = sprintf(cpu_buff,"{\"uptime\":%d,\"idle_time\":%d,\"sleep_time\":%d,\"deep_sleep_time\":%d}",
                                     cpuinfo.uptime,
                                     cpuinfo.idle_time,
                                     cpuinfo.sleep_time,
@@ -88,7 +88,7 @@ int main(void){
             mbed_stats_heap_get(  &heapinfo);
 
             // Construct strings to send
-            x=sprintf(heap_buff,"{\"current_size\":\"%d\",\"max_size\":\"%d\",\"total_size\":\"%d\",\"reserved_size\":\"%d\",\"alloc_cnt\":\"%d\",\"alloc_fail_cnt\":\"%d\"}",
+            x=sprintf(heap_buff,"{\"current_size\":%d,\"max_size\":%d,\"total_size\":%d,\"reserved_size\":%d,\"alloc_cnt\":%d,\"alloc_fail_cnt\":%d}",
                                 heapinfo.current_size,
                                 heapinfo.max_size,
                                 heapinfo.total_size,
@@ -106,7 +106,7 @@ int main(void){
             mbed_stats_stack_get(  &stackinfo);
 
             // Construct strings to send
-            x=sprintf(stack_buff,"{\"thread_id\":\"%d\",\"max_size\":\"%d\",\"reserved_size\":\"%d\",\"stack_cnt\":\"%d\"}",
+            x=sprintf(stack_buff,"{\"thread_id\":%d,\"max_size\":%d,\"reserved_size\":%d,\"stack_cnt\":%d}",
                                 stackinfo.thread_id,
                                 stackinfo.max_size,
                                 stackinfo.reserved_size,
@@ -122,7 +122,7 @@ int main(void){
             mbed_stats_sys_get(  &sysinfo);
 
             // Construct strings to send
-            x=sprintf(sys_buff,"{\"os_version\":\"%d\",\"cpu_id\":\"%d\",\"compiler_id\":\"%d\",\"compiler_version\":\"%d\"}",
+            x=sprintf(sys_buff,"{\"os_version\":%d,\"cpu_id\":%d,\"compiler_id\":%d,\"compiler_version\":%d}",
                                 sysinfo.os_version,
                                 sysinfo.cpu_id,
                                 sysinfo.compiler_id,
