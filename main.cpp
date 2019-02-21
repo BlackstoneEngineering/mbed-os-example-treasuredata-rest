@@ -15,7 +15,6 @@
  */
 
 #include "mbed.h"
-#include "TCPSocket.h"
 #include "wifi-ism43362/ISM43362Interface.h"
 #include "treasure-data-rest.h"
 
