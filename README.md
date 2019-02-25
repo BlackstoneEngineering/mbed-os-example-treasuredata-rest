@@ -24,5 +24,13 @@ Thats awesome! In this program we are using the ism43362 wifi on the ST IOT01A b
 ## How is this working?
 See the readme on the [Treasure Data REST API Library](https://github.com/blackstoneengineering/mbed-os-treasuredata-rest).
 
+## Troubleshooting
+
+### SSL Failure
+If over time the SSL cert expires you will need to replace the cert in `treasuredata-sslcert.h`. You can do this by running ` openssl s_client -connect in.treasuredata.com:443 -showcerts ` and replacing the cert with the lat one in the chain that is displayed. 
+
+### HTTP failures
+Try a different access point, double check you changed your Treasure Data API keys and the SSID / Password for the wifi are set correctly in `mbed_app.json`. 
+
 ## Liscense
 Apache 2.0
