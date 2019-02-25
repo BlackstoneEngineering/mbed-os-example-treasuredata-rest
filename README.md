@@ -11,7 +11,7 @@ This example demonstrates how to use the Treasure Data REST API to send data fro
 1) Copy / Paste your Treasure Data API key into the mbed_app.json file
 1) If using Wifi copy / paste the SSID / Password into the mbed_app.json file
 1) Create Database in your Treasure Data account called `test_database` for the program to send data to
-1) Compile and Run code on board (`mbed compile --target auto --toolchain GCC_ARM --flash --sterm`)
+1) Compile and Run code on board (`mbed compile --target auto --toolchain GCC_ARM --flash --sterm`) (or (compile it in the online compiler)[http://os.mbed.com/compiler?import=https://github.com/BlackstoneEngineering/mbed-os-example-treasuredata-rest])
 1) View data in Treasure Data (it will take 3-5 minutes to appear)
 
 ### What does this look like?
