@@ -15,41 +15,50 @@
  */
 
 #include "mbed.h"
-#include "TCPSocket.h"
-#include "wifi-ism43362/ISM43362Interface.h"
 #include "treasure-data-rest.h"
 
 #define BUFF_SIZE   100
 
-ISM43362Interface net;
-// WiFiInterface *wifi;
+// Default network interface object. Don't forget to change the WiFi SSID/password in mbed_app.json if you're using WiFi.
+NetworkInterface *net = NetworkInterface::get_default_instance();
 
 int main(void){
 
-    int count = 0;
-
     printf("\r\nTreasure Data REST API Demo\n");
 
-    // Connect to Wifi
-    printf("\nConnecting to %s...\n", MBED_CONF_APP_WIFI_SSID);
-    int ret = net.connect(MBED_CONF_APP_WIFI_SSID, MBED_CONF_APP_WIFI_PASSWORD, NSAPI_SECURITY_WPA_WPA2);
-    if (ret != 0) {
-        printf("\nConnection error: %d\n", ret);
+    // Connect to the internet (DHCP is expected to be on)
+    printf("Connecting to the network using the default network interface...\n");
+    net = NetworkInterface::get_default_instance();
+
+    nsapi_error_t net_status = -1;
+    for (int tries = 0; tries < 3; tries++) {
+        net_status = net->connect();
+        if (net_status == NSAPI_ERROR_OK) {
+            break;
+        } else {
+            printf("Unable to connect to network. Retrying...\n");
+        }
+    }
+
+    if (net_status != NSAPI_ERROR_OK) {
+        printf("ERROR: Connecting to the network failed (%d)!\n", net_status);
         return -1;
     }
 
+    printf("Connected to the network successfully. IP address: %s\n", net->get_ip_address());
+
     printf("Success\n\n");
-    printf("MAC: %s\n", net.get_mac_address());
-    printf("IP: %s\n", net.get_ip_address());
-    printf("Netmask: %s\n", net.get_netmask());
-    printf("Gateway: %s\n", net.get_gateway());
-    printf("RSSI: %d\n\n", net.get_rssi());
+    printf("MAC: %s\n", net->get_mac_address());
+    printf("IP: %s\n", net->get_ip_address());
+    printf("Netmask: %s\n", net->get_netmask());
+    printf("Gateway: %s\n", net->get_gateway());
+    // printf("RSSI: %d\n\n", net.get_rssi());
 
     // Create Treasure data objects (Network, Database, Table, APIKey)
-    TreasureData_RESTAPI* heap  = new TreasureData_RESTAPI(&net,"test_database","heap_info", MBED_CONF_APP_API_KEY);
-    TreasureData_RESTAPI* cpu   = new TreasureData_RESTAPI(&net,"test_database","cpu_info",  MBED_CONF_APP_API_KEY);
-    TreasureData_RESTAPI* stack = new TreasureData_RESTAPI(&net,"test_database","stack_info",MBED_CONF_APP_API_KEY);
-    TreasureData_RESTAPI* sys   = new TreasureData_RESTAPI(&net,"test_database","sys_info",  MBED_CONF_APP_API_KEY);
+    TreasureData_RESTAPI* heap  = new TreasureData_RESTAPI(net,"test_database","heap_info", MBED_CONF_APP_API_KEY);
+    TreasureData_RESTAPI* cpu   = new TreasureData_RESTAPI(net,"test_database","cpu_info",  MBED_CONF_APP_API_KEY);
+    TreasureData_RESTAPI* stack = new TreasureData_RESTAPI(net,"test_database","stack_info",MBED_CONF_APP_API_KEY);
+    TreasureData_RESTAPI* sys   = new TreasureData_RESTAPI(net,"test_database","sys_info",  MBED_CONF_APP_API_KEY);
 
     // Device Information Objects
     mbed_stats_cpu_t    cpuinfo;
@@ -73,10 +82,10 @@ int main(void){
 
             // Construct strings to send
             x = sprintf(cpu_buff,"{\"uptime\":%d,\"idle_time\":%d,\"sleep_time\":%d,\"deep_sleep_time\":%d}",
-                                    cpuinfo.uptime,
-                                    cpuinfo.idle_time,
-                                    cpuinfo.sleep_time,
-                                    cpuinfo.deep_sleep_time);
+                                cpuinfo.uptime,
+                                cpuinfo.idle_time,
+                                cpuinfo.sleep_time,
+                                cpuinfo.deep_sleep_time);
             cpu_buff[x]=0; // null terminate the string
 
             // Send data to Treasure data
@@ -137,9 +146,9 @@ int main(void){
 
     }
 
-    net.disconnect();
+    // Code should not get here, included for completeness
+    net->disconnect();
 
     printf("\nDone, x=%d\n",x);
-
 
 }

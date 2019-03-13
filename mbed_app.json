@@ -1,26 +1,29 @@
 {
     "macros": [ "MBED_ALL_STATS_ENABLED"],
     "config": {
-        "wifi-shield": {
-            "help": "Options are internal, WIFI_ESP8266, WIFI_IDW0XX1",
-            "value": "WIFI_ISM43362"
-        },
-        "wifi-ssid": {
-            "help": "WiFi SSID",
-            "value": "\"CHANGE ME!\""
-        },
-        "wifi-password": {
-            "help": "WiFi Password",
-            "value": "\"CHANGE ME!\""
-        },
         "api-key":{
             "help":  "REST API Key for Treasure Data",
-            "value": "\"APIKEY GOES HERE\""
+            "value": "\"REPLACE_WITH_YOUR_KEY\""
+        },
+        "main-stack-size": {
+            "value": 12000
         }
     },
     "target_overrides": {
         "*": {
-            "platform.stdio-convert-newlines": true
+            "platform.stdio-convert-newlines": true,
+            "mbed-trace.enable"                 : null,
+            "nsapi.default-wifi-security"       : "WPA_WPA2",
+            "nsapi.default-wifi-ssid"           : "\"SSID\"",
+            "nsapi.default-wifi-password"       : "\"PASSWORD\""
+        },
+        "DISCO_L475VG_IOT01A": {
+            "target.extra_labels_add"           : ["WIFI_ISM43362"],
+            "target.network-default-interface-type" : "WIFI"
+        },
+        "DISCO_F413ZH": {
+            "target.extra_labels_add"           : ["WIFI_ISM43362"],
+            "target.network-default-interface-type" : "WIFI"
         }
     }
 }
