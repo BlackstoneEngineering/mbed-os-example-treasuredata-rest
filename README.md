@@ -15,7 +15,8 @@ This example demonstrates how to use the Treasure Data REST API to send data fro
 1) View data in Treasure Data (it will take 3-5 minutes to appear)
 
 ### What does this look like?
-// TODO: Video
+[![How to send data from Mbed OS to Treasure Data with HTTPS](https://img.youtube.com/vi/_tqD6GLMHQA/0.jpg)](https://www.youtube.com/watch?v=_tqD6GLMHQA)
+
 
 
 ### What if i'm not using Wifi? Or a different Wifi?
